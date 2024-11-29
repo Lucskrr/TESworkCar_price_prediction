@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard de Análise de Preços</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: #333;
+        text-align: center;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 30px;
+        color: #444;
+        text-align: center;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #555;
+        margin: 15px 0;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+      }
+
+      .back-button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: all 0.3s ease, transform 0.2s;
+        margin-top: 30px;
+      }
+
+      .back-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      .error-message {
+        color: red;
+        font-size: 1rem;
+        margin: 20px 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dashboard de Análise de Preços de Carros</h1>
+
+    {% if error %}
+    <p class="error-message">{{ error }}</p>
+    {% endif %} {% if img_data_1 %}
+    <div class="chart-container">
+      <h2>Distribuição de Preços por Tipo de Combustível</h2>
+      <p>
+        Este gráfico apresenta a distribuição dos preços dos carros, segmentados
+        pelo tipo de combustível.
+      </p>
+      <img
+        src="data:image/png;base64,{{ img_data_1 }}"
+        alt="Distribuição de Preços"
+      />
+    </div>
+    {% endif %} {% if img_data_2 %}
+    <div class="chart-container">
+      <h2>Relação entre Preço e Quilometragem</h2>
+      <p>
+        Este gráfico analisa a relação entre o preço dos carros e a
+        quilometragem rodada.
+      </p>
+      <img
+        src="data:image/png;base64,{{ img_data_2 }}"
+        alt="Preço vs Quilometragem"
+      />
+    </div>
+    {% endif %} {% if img_data_3 %}
+    <div class="chart-container">
+      <h2>Mapa de Correlação entre Variáveis</h2>
+      <p>
+        Este gráfico destaca as relações entre as variáveis principais, como
+        preço, quilometragem e ano.
+      </p>
+      <img
+        src="data:image/png;base64,{{ img_data_3 }}"
+        alt="Mapa de Correlação"
+      />
+    </div>
+    {% endif %}
+
+    <a href="{% url 'index' %}" class="back-button">Voltar para o Início</a>
+    <footer>
+      <p>Desenvolvido por Lucca Rocha Oliveira e Eduardo Grunitzky - 2024</p>
+    </footer>
+  </body>
+</html>

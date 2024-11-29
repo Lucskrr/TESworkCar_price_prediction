@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Carros</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Estilos mantidos do código original */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .filters select,
+      .filters input,
+      .filters button,
+      .clear-filters {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease;
+      }
+
+      .filters button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .filters button:hover {
+        background: #0056b3;
+      }
+
+      .clear-filters {
+        background-color: white;
+        color: #ff0000;
+        border: 1px solid #ff0000;
+        text-decoration: none;
+      }
+
+      .clear-filters:hover {
+        background-color: #ff0000;
+        color: white;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f4f7fc;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 10px;
+      }
+
+      .pagination a {
+        padding: 10px 15px;
+        text-decoration: none;
+        background: #007bff;
+        color: white;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .pagination a:hover {
+        background: #0056b3;
+      }
+
+      .back-to-index {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        padding: 12px 25px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .back-to-index:hover {
+        background: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lista de Carros</h1>
+      <form class="filters">
+        <select name="brand">
+          <option value="">Selecione a Marca</option>
+          {% for b in brands %}
+            <option value="{{ b }}" {% if b == brand %}selected{% endif %}>{{ b }}</option>
+          {% endfor %}
+        </select>
+        <input
+          type="text"
+          name="model"
+          placeholder="Modelo"
+          value="{{ model }}"
+        />
+        <input type="number" name="year" placeholder="Ano" value="{{ year }}" />
+        <input
+          type="number"
+          name="price"
+          placeholder="Preço Máximo"
+          value="{{ price }}"
+        />
+        <button type="submit">Filtrar</button>
+        <a href="{% url 'car_list' %}" class="clear-filters">Limpar</a>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Ano</th>
+            <th>Preço</th>
+            <th>Quilometragem</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for car in cars %}
+          <tr>
+            <td>{{ car.model }}</td>
+            <td>{{ car.brand }}</td>
+            <td>{{ car.prod_year }}</td>
+            <td>{{ car.price }}</td>
+            <td>{{ car.mileage }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Nenhum carro encontrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="pagination">
+        {% if cars.has_previous %}
+        <a href="?page=1">&laquo; Primeiro</a>
+        <a href="?page={{ cars.previous_page_number }}">Anterior</a>
+        {% endif %}
+        <span>Página {{ cars.number }} de {{ cars.paginator.num_pages }}</span>
+        {% if cars.has_next %}
+        <a href="?page={{ cars.next_page_number }}">Próxima</a>
+        <a href="?page={{ cars.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+      </div>
+      <a href="{% url 'index' %}" class="back-to-index">Voltar ao Início</a>
+    </div>
+    <footer>
+      <p>Desenvolvido por Lucca Rocha Oliveira e Eduardo Grunitzky - 2024</p>
+    </footer>
+  </body>
+</html>
