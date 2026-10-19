@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+db.sqlite3
+
+# Segredos e ambiente
+.env
+*.env
+!.env.example
+
+# Editores e logs
+.idea/
+.vscode/
+*.log
